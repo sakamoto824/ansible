@@ -1,0 +1,8 @@
+---
+- hosts: web
+  become: yes
+  tasks:
+    - name: Install Jinja2
+      apt:
+        name: jinja2
+        state: latest

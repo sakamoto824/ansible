@@ -1,0 +1,8 @@
+---
+- hosts: web
+  become: yes
+  tasks:
+    - name: Install PHP CLI
+      apt:
+        name: php7.2-cli
+        state: latest
