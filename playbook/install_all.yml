@@ -1,0 +1,15 @@
+---
+- hosts: web
+  become: yes
+  tasks:
+    - name: Install PHP CLI
+      apt:
+        name: php7.2-cli
+        state: latest
+
+    - name: ensure nginx is at the latest version
+      apt: name=nginx state=latest
+    - name: start nginx
+      service:
+          name: nginx
+          state: started
