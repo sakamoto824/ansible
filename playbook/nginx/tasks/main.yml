@@ -1,0 +1,38 @@
+-  hosts: web
+   become: True
+   tasks:
+    - name: install nginx
+      apt: name=nginx update_cache=yes
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+    - name: install nginx
+      pkgng: name=nginx
+      when: ansible_distribution == 'FreeBSD'
+
+
+    - name: copy nginx config file
+      copy: src=~/ansible/playbook/nginx/files/nginx.conf dest=/etc/nginx/sites-available/default
+      when: ansible_distribution == 'Ubuntu'
+
+
+    - name: copy nginx config file
+      copy: src=~/ansible/playbook/nginx/files/nginx.conf dest=/usr/local/etc/nginx/nginx.conf.bk
+      when: ansible_distribution == 'FreeBSD'
+
+    - name: enable configuration
+      file: >
+         dest=/etc/nginx/sites-enabled/default
+         src=/etc/nginx/sites-available/default
+         state=link
+      when: ansible_distribution == 'Ubuntu'    
+    
+    - name: copy index.html
+      template: src=~/ansible/playbook/nginx/templates/index.html.j2 dest=/var/www/html/index.html mode=0644
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: copy index.html
+      template: src=~/ansible/playbook/nginx/templates/index.html.j2 dest=/usr/local/www/nginx/index.html mode=0644
+      when: ansible_distribution == 'FreeBSD'
+   
+    - name: restart nginx
+      service: name=nginx state=restarted

@@ -1,0 +1,7 @@
+# Install common packages on all FreeBSD server such as
+# bash, vnstat, htop and more
+- hosts: bsd
+  tasks:
+      - name: Add packages on FreeBSD 
+        pkgng:
+            name: rsync,bash,most,bash-completion,vnstat,htop,wget,curl
