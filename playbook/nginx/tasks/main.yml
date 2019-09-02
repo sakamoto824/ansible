@@ -9,11 +9,17 @@
       pkgng: name=nginx
       when: ansible_distribution == 'FreeBSD'
 
+    - name: install php
+      apt: name=php7.2-cli
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+      
+    - name: install php
+      pkgng: name=php72
+      when: ansible_distribution == 'FreeBSD'
 
     - name: copy nginx config file
       copy: src=~/ansible/playbook/nginx/files/nginx.conf dest=/etc/nginx/sites-available/default
       when: ansible_distribution == 'Ubuntu'
-
 
     - name: copy nginx config file
       copy: src=~/ansible/playbook/nginx/files/nginx.conf dest=/usr/local/etc/nginx/nginx.conf.bk
