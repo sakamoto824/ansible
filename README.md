@@ -1,5 +1,5 @@
 # ansible
-Ansible 
+Ansible Practice
 
 
 1. install php and nginx on both Linux Servers (FreeBSD & Ubuntu).
